@@ -1,0 +1,28 @@
+#include <TM1637Display.h>
+
+// Define the connections pins
+#define CLK 3
+#define DIO 2
+
+TM1637Display display(CLK, DIO);
+
+int countdownTime = 5 * 60; // Countdown time in seconds (e.g., 5 minutes)
+
+void setup() {
+  display.setBrightness(0x0f); // Set the display to maximum brightness
+}
+
+void loop() {
+  int minutes = countdownTime / 60;
+  int seconds = countdownTime % 60;
+
+  // Display the time in mm:ss format
+  display.showNumberDecEx(minutes * 100 + seconds, 0x40, true);
+
+  delay(1000); // Wait for 1 second
+  countdownTime--;
+
+  if (countdownTime < 0) {
+    countdownTime = 0; // Stop the countdown at 0
+  }
+}
